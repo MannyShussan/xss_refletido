@@ -4,12 +4,14 @@ const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 // Servir HTML
 app.get('/', (_, res) => {
@@ -18,6 +20,12 @@ app.get('/', (_, res) => {
 
 app.get('/sucesso', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'sucesso.html'))
+});
+
+app.get('/atualizacao', (req, res) => {
+    const userInput = req.query.input || '';
+
+    res.send(`${userInput}`);
 });
 
 // Rota de captura
@@ -46,7 +54,7 @@ app.post('/captura', (req, res) => {
         });
     });
 
-    res.json({redirectTo: '/sucesso'});
+    res.json({ redirectTo: '/sucesso' });
 });
 
 app.listen(PORT, () => {

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Página Vulnerável</title>
+</head>
+<body>
+    <h1>Exemplo de XSS Refletido</h1>
+    <p>Input do usuário: <%- input %></p> 
+    <!-- 
+        <%- %> renderiza HTML sem escapar (vulnerável a XSS).
+        Se usasse <%= %>, escaparia automaticamente (seguro).
+    -->
+</body>
+</html>
