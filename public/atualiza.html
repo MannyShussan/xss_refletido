@@ -69,6 +69,32 @@
     </div>
 
     <script>
+        const send = document.getElementById('submit');
+
+        send.addEventListener('click', event => {
+            event.preventDefault();
+
+            const obj = {};
+            const inputs = document.querySelectorAll('input');
+
+            inputs.forEach((input) => {
+                obj[input.name] = input.value;
+            });
+
+            console.log(obj);
+
+            fetch('/captura', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams(obj).toString()
+            }).then(response => response.json()).then(data => {
+                if (data.redirectTo) {
+                    window.location.href = data.redirectTo;
+                }
+            });
+        });
     </script>
 </body>
 

@@ -18,6 +18,10 @@ app.get('/', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.get('/atualizar-cadastro', (_, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'atualiza.html'));
+});
+
 app.get('/sucesso', (_, res) => {
     res.sendFile(path.join(__dirname, 'public', 'sucesso.html'))
 });
